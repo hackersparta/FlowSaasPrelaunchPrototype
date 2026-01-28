@@ -1,0 +1,76 @@
+{
+  "name": "Auto-Resize Images from FTP to S3",
+  "nodes": [
+    {
+      "parameters": {
+        "pollInterval": 60
+      },
+      "id": "trigger-ftp",
+      "name": "Watch FTP Folder",
+      "type": "n8n-nodes-base.ftpTrigger",
+      "typeVersion": 1,
+      "position": [250, 300],
+      "credentials": {
+        "ftp": {
+          "id": "{{FTP_CREDENTIAL_ID}}",
+          "name": "My FTP Server"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {
+          "resize": true,
+          "width": 800,
+          "height": 600
+        }
+      },
+      "id": "resize-node",
+      "name": "Bulk Resize",
+      "type": "n8n-nodes-base.editImage",
+      "typeVersion": 1,
+      "position": [450, 300]
+    },
+    {
+        "parameters": {
+            "bucketName": "resized-images",
+            "fileName": "={{$json.name}}"
+        },
+        "id": "upload-s3",
+        "name": "Upload to S3",
+        "type": "n8n-nodes-base.awsS3",
+        "typeVersion": 1,
+        "position": [650, 300],
+        "credentials": {
+            "aws": {
+                "id": "{{AWS_CREDENTIAL_ID}}",
+                "name": "My S3 Bucket"
+            }
+        }
+    }
+  ],
+  "connections": {
+    "Watch FTP Folder": {
+      "main": [
+        [
+          {
+            "node": "Bulk Resize",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Bulk Resize": {
+        "main": [
+            [
+                {
+                    "node": "Upload to S3",
+                    "type": "main",
+                    "index": 0
+                }
+            ]
+        ]
+    }
+  }
+}

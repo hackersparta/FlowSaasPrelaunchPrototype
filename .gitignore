@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.env
+
+# Node
+node_modules/
+dist/
+.next/
+out/
+build/
+
+# IDE
+.vscode/
+.idea/
+
+# System
+thumbs.db
+.DS_Store
+
+# n8n
+.n8n/
