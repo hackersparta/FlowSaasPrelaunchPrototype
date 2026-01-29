@@ -34,7 +34,7 @@ interface WorkflowGraphProps {
 
 export default function WorkflowGraph({ nodes, connections }: WorkflowGraphProps) {
     // Convert to React Flow format with horizontal layout
-    const flowNodes: Node[] = nodes.map((node, index) => ({
+    const flowNodes: Node[] = (nodes || []).map((node, index) => ({
         id: node.id,
         type: 'custom',
         // Force horizontal layout: space nodes 250px apart horizontally
@@ -48,7 +48,7 @@ export default function WorkflowGraph({ nodes, connections }: WorkflowGraphProps
         },
     }));
 
-    const flowEdges: Edge[] = connections.map((conn, idx) => ({
+    const flowEdges: Edge[] = (connections || []).map((conn, idx) => ({
         id: `edge-${idx}`,
         source: conn.from,
         target: conn.to,

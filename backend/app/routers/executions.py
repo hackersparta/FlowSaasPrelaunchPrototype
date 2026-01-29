@@ -152,6 +152,15 @@ async def get_execution_details(
             # Fetch workflow structure first
             workflow_structure = await n8n_client.get_workflow(n8n_workflow_id)
             
+            # Fetch ALL executions for this workflow from n8n to get accurate count
+            print(f"Fetching all executions for workflow {n8n_workflow_id} to get live count")
+            executions_list = await n8n_client.list_executions(workflow_id=n8n_workflow_id)
+            
+            # Update total_runs with LIVE count from n8n
+            if executions_list.get("data"):
+                total_runs = len(executions_list["data"])
+                print(f"Live execution count from n8n: {total_runs}")
+            
             # Determine trigger type from workflow
             if workflow_structure.get("nodes"):
                 first_node = workflow_structure["nodes"][0]
@@ -164,7 +173,6 @@ async def get_execution_details(
             # If we don't have an execution ID, fetch the latest one from n8n
             if not n8n_execution_id:
                 print(f"No stored execution ID, fetching latest from n8n for workflow {n8n_workflow_id}")
-                executions_list = await n8n_client.list_executions(workflow_id=n8n_workflow_id)
                 
                 if executions_list.get("data") and len(executions_list["data"]) > 0:
                     latest_exec = executions_list["data"][0]

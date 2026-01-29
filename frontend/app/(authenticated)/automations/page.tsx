@@ -64,19 +64,7 @@ export default function AutomationsPage() {
 
     return (
         <div className="min-h-screen bg-[#F8F9FA] text-[#2D2E2E]">
-            {/* Header */}
-            <header className="bg-white border-b border-slate-200 sticky top-0 z-10">
-                <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-                    <div className="flex items-center gap-2 cursor-pointer" onClick={() => router.push('/')}>
-                        <div className="w-8 h-8 bg-[#FF4F00] rounded-lg"></div>
-                        <span className="font-bold text-xl tracking-tight">FlowSaaS</span>
-                    </div>
-                    <div className="flex gap-4">
-                        <Button variant="ghost" onClick={() => router.push('/dashboard')}>Dashboard</Button>
-                        <Button variant="outline" onClick={() => router.push('/marketplace')}>Browse Marketplace</Button>
-                    </div>
-                </div>
-            </header>
+
 
             <div className="max-w-7xl mx-auto px-6 py-12">
                 <div className="flex justify-between items-end mb-8">
