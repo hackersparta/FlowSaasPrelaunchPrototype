@@ -129,7 +129,7 @@ const BeforeAfterComparison = () => {
                         <div className="mt-6 text-center p-4 bg-gradient-to-r from-orange-600 to-red-600 rounded-xl text-white relative z-10">
                             <p className="text-sm font-semibold mb-1">Time Saved Per Lead</p>
                             <p className="text-3xl font-bold">99.2%</p>
-                            <p className="text-sm opacity-90 mt-1">That's 69+ minutes back in your day!</p>
+                            <p className="text-sm opacity-90 mt-1">That&apos;s 69+ minutes back in your day!</p>
                         </div>
                     </div>
                 </div>

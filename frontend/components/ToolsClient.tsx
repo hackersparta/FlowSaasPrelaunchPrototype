@@ -97,7 +97,7 @@ export default function ToolsClient() {
                         ))}
                         {filteredTools.length === 0 && (
                             <div className="col-span-full text-center py-20 text-slate-500">
-                                No tools found matching "{search}"
+                                No tools found matching &quot;{search}&quot;
                             </div>
                         )}
                     </div>
