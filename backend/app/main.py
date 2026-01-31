@@ -28,6 +28,7 @@ app.add_middleware(
         "http://frontend:3000",
         # Allow Vercel Frontend (Add your actual Vercel domain later or use *)
         "https://*.vercel.app",
+        "https://flowsaas-iota.vercel.app",
         "https://flowsaas-frontend.vercel.app",
         # Allow Render Backend (Self)
         "https://*.onrender.com",
