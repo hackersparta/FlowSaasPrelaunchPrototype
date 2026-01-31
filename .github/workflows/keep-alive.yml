@@ -1,0 +1,24 @@
+name: Keep Services Alive
+
+on:
+  schedule:
+    # Ping every 10 minutes to keep Render services awake
+    - cron: '*/10 * * * *'
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  ping-services:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Backend
+        run: |
+          echo "Pinging backend..."
+          curl -f https://flowsaas-backend.onrender.com/health || echo "Backend ping failed"
+          
+      - name: Ping n8n
+        run: |
+          echo "Pinging n8n..."
+          curl -f https://workflows-n8n.onrender.com/healthz || echo "n8n ping failed"
+          
+      - name: Success
+        run: echo "All services pinged successfully"
