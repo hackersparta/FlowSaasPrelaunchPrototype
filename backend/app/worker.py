@@ -19,6 +19,13 @@ celery_app.conf.update(
     enable_utc=True,
     task_routes={
         "app.worker.execute_workflow_task": "main-queue",
+        "app.tasks.sync_tasks.sync_all_users_executions": "main-queue",
+    },
+    beat_schedule={
+        'sync-executions-every-5-minutes': {
+            'task': 'app.tasks.sync_tasks.sync_all_users_executions',
+            'schedule': 300.0,  # Every 5 minutes (300 seconds)
+        },
     }
 )
 
