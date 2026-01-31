@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
-from .routers import auth, executions, admin, templates, payments, tools, admin_tools, automations, ai_workflows, ai_tools
+from .routers import auth, executions, admin, templates, payments, tools, admin_tools, automations, ai_workflows, ai_tools, restore_endpoint
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -51,6 +51,7 @@ app.include_router(admin_tools.router)
 app.include_router(automations.router)
 app.include_router(ai_workflows.router)
 app.include_router(ai_tools.router)
+app.include_router(restore_endpoint.router)
 
 @app.get("/")
 def read_root():
