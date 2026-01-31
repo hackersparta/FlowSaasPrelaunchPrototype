@@ -90,7 +90,7 @@ export default function ToolClient({ slug }: ToolClientProps) {
                 Object.keys(inputData).forEach(k => {
                     const val = inputData[k];
                     if (val instanceof File) {
-                        if (!fileAppended && !tool.input_schema) {
+                        if (!fileAppended && !tool?.input_schema) {
                             formData.append('file', val);
                             fileAppended = true;
                         } else {
@@ -98,7 +98,7 @@ export default function ToolClient({ slug }: ToolClientProps) {
                         }
                     } else if (val !== undefined && val !== null) {
                         if (val instanceof File) {
-                            if (!fileAppended && !tool.input_schema) {
+                            if (!fileAppended && !tool?.input_schema) {
                                 formData.append('file', val);
                                 fileAppended = true;
                             } else {
