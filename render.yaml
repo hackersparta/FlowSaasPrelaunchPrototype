@@ -29,10 +29,7 @@ services:
       - key: REDIS_URL
         sync: false
       - key: N8N_HOST
-        fromService:
-          type: web
-          name: flowsaas-n8n
-          property: url
+        sync: false
       - key: N8N_USER
         sync: false
       - key: N8N_PASSWORD
@@ -78,7 +75,4 @@ services:
       - key: N8N_ENCRYPTION_KEY
         sync: false
       - key: WEBHOOK_URL
-        fromService:
-          type: web
-          name: flowsaas-n8n
-          property: url
+        sync: false
