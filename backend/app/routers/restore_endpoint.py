@@ -7,7 +7,7 @@ from sqlalchemy.orm import Session
 from typing import Annotated
 from ..database import get_db
 from ..models import WorkflowTemplate, FreeTool, User
-from ..dependencies import get_admin_user
+from ..guards.admin_guard import get_admin_user
 from ..services.n8n_client import n8n_client
 
 router = APIRouter(prefix="/admin", tags=["admin-restore"])
