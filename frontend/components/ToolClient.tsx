@@ -67,7 +67,7 @@ export default function ToolClient({ slug }: ToolClientProps) {
                 setInputData(defaults);
             })
             .catch(err => console.error('Failed to load tool:', err));
-    }, [slug, tool.input_schema, tool.content_json]);
+    }, [slug]);
 
     const executeTool = async () => {
         setLoading(true);
