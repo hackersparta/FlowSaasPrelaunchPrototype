@@ -11,12 +11,7 @@ const StatsCounter = () => {
         users: 0
     });
 
-    const finalCounts = {
-        workflows: 500,
-        tools: 100,
-        timeSaved: 50000,
-        users: 10000
-    };
+
 
     useEffect(() => {
         const observer = new IntersectionObserver(
@@ -38,6 +33,13 @@ const StatsCounter = () => {
 
     useEffect(() => {
         if (!isVisible) return;
+
+        const finalCounts = {
+            workflows: 500,
+            tools: 100,
+            timeSaved: 50000,
+            users: 10000
+        };
 
         const duration = 2000;
         const steps = 60;

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 
@@ -30,11 +30,7 @@ export default function AdminToolsPage() {
         python_code: ''
     });
 
-    useEffect(() => {
-        loadTools();
-    }, []);
-
-    const loadTools = () => {
+    const loadTools = useCallback(() => {
         const token = localStorage.getItem('token');
         fetch('http://localhost:8000/admin/tools/', {
             headers: { 'Authorization': `Bearer ${token}` }
@@ -42,7 +38,11 @@ export default function AdminToolsPage() {
             .then(res => res.json())
             .then(data => setTools(data))
             .catch(() => router.push('/login'));
-    };
+    }, [router]);
+
+    useEffect(() => {
+        loadTools();
+    }, [loadTools]);
 
     const uploadTool = async () => {
         const token = localStorage.getItem('token');

@@ -1,5 +1,7 @@
 "use client";
 
+import React from 'react';
+
 
 
 const BeforeAfterComparison = () => {
@@ -47,6 +49,7 @@ const BeforeAfterComparison = () => {
                                     </div>
                                     <div className="flex-1">
                                         <p className="text-slate-700 font-medium">{item.text}</p>
+                                        <p className="text-sm text-amber-800">Hidden Costs: IT setup, maintenance, security patching require ~5hrs/week across teams</p>
                                         <p className="text-sm text-red-600 font-semibold">{item.time}</p>
                                     </div>
                                 </div>

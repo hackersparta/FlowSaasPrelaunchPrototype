@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -20,11 +20,7 @@ export default function AutomationsPage() {
     const [executions, setExecutions] = useState<Execution[]>([]);
     const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        loadExecutions();
-    }, []);
-
-    const loadExecutions = async () => {
+    const loadExecutions = useCallback(async () => {
         try {
             const token = localStorage.getItem('token');
             if (!token) {
@@ -45,7 +41,11 @@ export default function AutomationsPage() {
         } finally {
             setLoading(false);
         }
-    };
+    }, [router]);
+
+    useEffect(() => {
+        loadExecutions();
+    }, [loadExecutions]);
 
     const getStatusStyle = (status: string) => {
         switch (status?.toUpperCase()) {

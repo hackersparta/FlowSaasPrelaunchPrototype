@@ -210,7 +210,7 @@ export default function WorkflowClient({ id }: Props) {
                             ) : (
                                 <div className="space-y-6 text-center py-6">
                                     <div className="mx-auto w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center text-4xl mb-2">⚡</div>
-                                    <p className="text-slate-500 max-w-md mx-auto">This automation is ready to run. It doesn't require any additional configuration.</p>
+                                    <p className="text-slate-500 max-w-md mx-auto">This automation is ready to run. It doesn&apos;t require any additional configuration.</p>
                                     <Button
                                         className="w-full bg-[#FF4F00] hover:bg-[#E64600] h-14 text-lg font-bold shadow-lg shadow-orange-500/20"
                                         onClick={handleRun}

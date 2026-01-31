@@ -67,7 +67,7 @@ export default function ToolClient({ slug }: ToolClientProps) {
                 setInputData(defaults);
             })
             .catch(err => console.error('Failed to load tool:', err));
-    }, [slug]);
+    }, [slug, tool.input_schema, tool.content_json]);
 
     const executeTool = async () => {
         setLoading(true);
@@ -97,7 +97,16 @@ export default function ToolClient({ slug }: ToolClientProps) {
                             formData.append(k, val);
                         }
                     } else if (val !== undefined && val !== null) {
-                        formData.append(k, String(val));
+                        if (val instanceof File) {
+                            if (!fileAppended && !tool.input_schema) {
+                                formData.append('file', val);
+                                fileAppended = true;
+                            } else {
+                                formData.append(k, val);
+                            }
+                        } else if (val !== undefined && val !== null) {
+                            formData.append(k, String(val));
+                        }
                     }
                 });
 
@@ -399,6 +408,7 @@ export default function ToolClient({ slug }: ToolClientProps) {
                                     {/* Preview if image */}
                                     {(tool.slug.includes('image') || tool.slug.includes('qrcode')) && (
                                         <div className="mt-4 flex justify-center bg-slate-800/50 p-4 rounded-lg">
+                                            {/* eslint-disable-next-line @next/next/no-img-element */}
                                             <img
                                                 src={`data:image/png;base64,${(() => {
                                                     try {
@@ -508,7 +518,7 @@ export default function ToolClient({ slug }: ToolClientProps) {
                             {content.pain_point && (
                                 <div className="bg-gradient-to-br from-red-900/20 to-orange-900/20 p-8 rounded-2xl border border-red-900/30">
                                     <h3 className="text-lg font-bold text-red-200 mb-2">😩 The Problem</h3>
-                                    <p className="text-slate-400 italic mb-6">"{content.pain_point}"</p>
+                                    <p className="text-slate-400 italic mb-6">&quot;{content.pain_point}&quot;</p>
 
                                     <div className="bg-gradient-to-br from-emerald-900/20 to-teal-900/20 p-6 rounded-xl border border-emerald-900/30">
                                         <h3 className="text-lg font-bold text-emerald-200 mb-2">🚀 The Solution</h3>

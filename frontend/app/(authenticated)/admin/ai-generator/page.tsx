@@ -32,29 +32,29 @@ export default function AIWorkflowGenerator() {
 
     // Fetch providers on mount
     useEffect(() => {
+        const fetchProviders = async () => {
+            const token = localStorage.getItem('token');
+            try {
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/admin/ai/providers`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                if (res.ok) {
+                    const data = await res.json();
+                    setProviders(data.providers || []);
+                    if (data.providers?.length > 0) {
+                        setSelectedProvider(data.providers[0]);
+                    }
+                }
+            } catch (err) {
+                console.error("Failed to fetch providers", err);
+                // Fallback
+                setProviders(["groq", "gemini"]);
+                setSelectedProvider("groq");
+            }
+        };
+
         fetchProviders();
     }, []);
-
-    const fetchProviders = async () => {
-        const token = localStorage.getItem('token');
-        try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/admin/ai/providers`, {
-                headers: { 'Authorization': `Bearer ${token}` }
-            });
-            if (res.ok) {
-                const data = await res.json();
-                setProviders(data.providers || []);
-                if (data.providers?.length > 0) {
-                    setSelectedProvider(data.providers[0]);
-                }
-            }
-        } catch (err) {
-            console.error("Failed to fetch providers", err);
-            // Fallback
-            setProviders(["groq", "gemini"]);
-            setSelectedProvider("groq");
-        }
-    };
 
     const handleGenerate = async () => {
         if (!prompt.trim()) return;
@@ -359,7 +359,7 @@ export default function AIWorkflowGenerator() {
                                 <div className="space-y-1">
                                     <h3 className="text-xl font-bold text-gray-900">Blueprint Ready</h3>
                                     <p className="text-gray-500 max-w-sm text-sm">
-                                        Once generated, you'll see the n8n logic and user registration fields here.
+                                        Once generated, you&apos;ll see the n8n logic and user registration fields here.
                                     </p>
                                 </div>
                             </div>
