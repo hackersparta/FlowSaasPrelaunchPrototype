@@ -191,6 +191,11 @@ async def run_template(
         }
     except Exception as e:
         # --- ERROR HANDLING START ---
+        import traceback
+        error_trace = traceback.format_exc()
+        print(f"❌ EXECUTION FAILED: {str(e)}")
+        print(f"🔍 TRACEBACK:\n{error_trace}")
+        
         if new_execution:
             new_execution.status = ExecutionStatus.FAILED
             new_execution.error_message = str(e)
@@ -199,4 +204,4 @@ async def run_template(
         # --- ERROR HANDLING END ---
 
         # Re-raise as HTTP exception so frontend sees it as failure
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail=f"Execution Failed: {str(e)}")
