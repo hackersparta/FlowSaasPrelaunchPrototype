@@ -15,7 +15,7 @@ def backup():
         "free_tools": []
     }
     
-    print("📦 Backing up database contents...")
+    print("[*] Backing up database contents...")
     
     # 1. Backup Workflow Templates
     templates = db.query(WorkflowTemplate).all()
@@ -30,7 +30,7 @@ def backup():
             "credits_per_run": t.credits_per_run,
             "is_active": t.is_active
         })
-    print(f"   ✅ Saved {len(templates)} Workflow Templates")
+    print(f"   [OK] Saved {len(templates)} Workflow Templates")
     
     # 2. Backup Free Tools
     tools = db.query(FreeTool).all()
@@ -50,7 +50,7 @@ def backup():
             "seo_description": tool.seo_description,
             "seo_keywords": tool.seo_keywords
         })
-    print(f"   ✅ Saved {len(tools)} Free Tools")
+    print(f"   [OK] Saved {len(tools)} Free Tools")
     
     # Ensure data dir exists
     os.makedirs("data", exist_ok=True)
@@ -58,7 +58,7 @@ def backup():
     with open("data/factory_reset.json", "w", encoding='utf-8') as f:
         json.dump(data, f, indent=2, ensure_ascii=False)
     
-    print(f"\\n🏁 Backup complete! Saved to backend/data/factory_reset.json")
+    print(f"\n[DONE] Backup complete! Saved to backend/data/factory_reset.json")
     print("You can now push this file to Git to preserve your data.")
 
 if __name__ == "__main__":
