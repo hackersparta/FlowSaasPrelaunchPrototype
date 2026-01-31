@@ -25,7 +25,12 @@ app.add_middleware(
         "http://localhost:8000",
         "http://127.0.0.1:3000",
         "http://127.0.0.1:8000",
-        "http://frontend:3000",  # Docker network
+        "http://frontend:3000",
+        # Allow Vercel Frontend (Add your actual Vercel domain later or use *)
+        "https://*.vercel.app",
+        "https://flowsaas-frontend.vercel.app",
+        # Allow Render Backend (Self)
+        "https://*.onrender.com",
     ],
     allow_credentials=True,
     allow_methods=["*"],

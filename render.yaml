@@ -1,0 +1,84 @@
+services:
+  # Service 1: Backend + Celery (Combined for Free Tier)
+  - type: web
+    name: flowsaas-backend
+    runtime: python
+    repo: https://github.com/hackersparta/FlowSaasPrelaunchPrototype
+    plan: free
+    region: singapore # or your preferred region
+    buildCommand: |
+      cd backend
+      pip install -r requirements.txt
+    startCommand: |
+      cd backend
+      chmod +x start.sh
+      ./start.sh
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: PORT
+        value: 8000
+      - key: POSTGRES_USER
+        sync: false
+      - key: POSTGRES_PASSWORD
+        sync: false
+      - key: POSTGRES_DB
+        sync: false
+      - key: POSTGRES_HOST
+        sync: false
+      - key: REDIS_URL
+        sync: false
+      - key: N8N_HOST
+        fromService:
+          type: web
+          name: flowsaas-n8n
+          property: url
+      - key: N8N_USER
+        sync: false
+      - key: N8N_PASSWORD
+        sync: false
+      - key: N8N_API_KEY
+        sync: false
+      - key: SECRET_KEY
+        sync: false # Generate this
+      - key: ALGORITHM
+        value: HS256
+
+  # Service 2: n8n (Workflow Engine)
+  - type: web
+    name: flowsaas-n8n
+    runtime: docker
+    repo: https://github.com/hackersparta/FlowSaasPrelaunchPrototype
+    plan: free
+    region: singapore
+    dockerContext: .
+    dockerfilePath: ./n8n.Dockerfile # We need to create this simple dockerfile wrapper
+    envVars:
+      - key: PORT
+        value: 5678
+        # n8n requires specific env vars
+      - key: N8N_BASIC_AUTH_ACTIVE
+        value: true
+      - key: N8N_BASIC_AUTH_USER
+        sync: false
+      - key: N8N_BASIC_AUTH_PASSWORD
+        sync: false
+      - key: DB_TYPE
+        value: postgresdb
+      - key: DB_POSTGRESDB_HOST
+        sync: false # Use Neon Host
+      - key: DB_POSTGRESDB_PORT
+        value: 5432
+      - key: DB_POSTGRESDB_DATABASE
+        sync: false
+      - key: DB_POSTGRESDB_USER
+        sync: false
+      - key: DB_POSTGRESDB_PASSWORD
+        sync: false
+      - key: N8N_ENCRYPTION_KEY
+        sync: false
+      - key: WEBHOOK_URL
+        fromService:
+          type: web
+          name: flowsaas-n8n
+          property: url
