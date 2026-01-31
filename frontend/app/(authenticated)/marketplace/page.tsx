@@ -12,7 +12,7 @@ export default function Marketplace() {
     useEffect(() => {
         const fetchTemplates = async () => {
             try {
-                const res = await fetch('http://localhost:8000/templates');
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/templates`);
                 if (!res.ok) throw new Error('Failed to fetch templates');
                 const data = await res.json();
                 setTemplates(data);

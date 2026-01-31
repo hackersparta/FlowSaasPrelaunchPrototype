@@ -73,7 +73,7 @@ export default function CreditsPage() {
         }
 
         // Fetch user info
-        fetch('http://localhost:8000/auth/me', {
+        fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/auth/me`, {
             headers: { 'Authorization': `Bearer ${token}` }
         })
             .then(res => res.json())
@@ -81,7 +81,7 @@ export default function CreditsPage() {
             .catch(() => router.push('/login'));
 
         // Fetch packages
-        fetch('http://localhost:8000/payments/packages')
+        fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/payments/packages`)
             .then(res => res.json())
             .then(data => {
                 const sorted = (data.packages || []).sort((a: any, b: any) => a.price - b.price);
@@ -102,7 +102,7 @@ export default function CreditsPage() {
 
         try {
             // Create order
-            const orderRes = await fetch('http://localhost:8000/payments/create-order', {
+            const orderRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/payments/create-order`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -128,7 +128,7 @@ export default function CreditsPage() {
                 description: `${orderData.credits} Credits`,
                 order_id: orderData.order_id,
                 handler: async function (response: any) {
-                    const verifyRes = await fetch('http://localhost:8000/payments/verify', {
+                    const verifyRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/payments/verify`, {
                         method: 'POST',
                         headers: {
                             'Authorization': `Bearer ${token}`,

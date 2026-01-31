@@ -32,7 +32,7 @@ export default function AdminDashboard() {
         }
 
         // Check if user is admin
-        fetch('http://localhost:8000/auth/me', {
+        fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/auth/me`, {
             headers: { 'Authorization': `Bearer ${token}` }
         })
             .then(res => {
@@ -55,7 +55,7 @@ export default function AdminDashboard() {
 
     const loadStats = async (token: string) => {
         try {
-            const res = await fetch('http://localhost:8000/admin/templates', {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/admin/templates`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             const templates = await res.json();

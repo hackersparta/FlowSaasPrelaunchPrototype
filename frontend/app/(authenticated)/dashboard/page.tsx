@@ -17,7 +17,7 @@ export default function Dashboard() {
         }
 
         // Fetch User Stats
-        fetch('http://localhost:8000/auth/me', {
+        fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/auth/me`, {
             headers: { 'Authorization': `Bearer ${token}` }
         })
             .then(res => {
@@ -31,7 +31,7 @@ export default function Dashboard() {
             });
 
         // Fetch Recent Executions
-        fetch('http://localhost:8000/executions/', {
+        fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/executions/`, {
             headers: { 'Authorization': `Bearer ${token}` }
         })
             .then(res => res.json())
@@ -151,7 +151,7 @@ export default function Dashboard() {
                                             <div key={exec.id} className="flex justify-between items-center p-4 hover:bg-slate-50 transition-colors">
                                                 <div className="flex items-center gap-4">
                                                     <div className={`w-2 h-2 rounded-full ${exec.status === 'SUCCESS' ? 'bg-green-500' :
-                                                            exec.status === 'FAILED' ? 'bg-red-500' : 'bg-amber-500'
+                                                        exec.status === 'FAILED' ? 'bg-red-500' : 'bg-amber-500'
                                                         }`} />
                                                     <div>
                                                         <div className="font-medium text-slate-700">Workflow Execution</div>
@@ -162,7 +162,7 @@ export default function Dashboard() {
                                                 </div>
                                                 <div>
                                                     <span className={`text-xs px-2.5 py-0.5 rounded-full font-medium ${exec.status === 'SUCCESS' ? 'bg-green-100 text-green-700' :
-                                                            exec.status === 'FAILED' ? 'bg-red-100 text-red-700' : 'bg-amber-100 text-amber-700'
+                                                        exec.status === 'FAILED' ? 'bg-red-100 text-red-700' : 'bg-amber-100 text-amber-700'
                                                         }`}>
                                                         {exec.status}
                                                     </span>

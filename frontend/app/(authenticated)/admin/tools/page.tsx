@@ -32,7 +32,7 @@ export default function AdminToolsPage() {
 
     const loadTools = useCallback(() => {
         const token = localStorage.getItem('token');
-        fetch('http://localhost:8000/admin/tools/', {
+        fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/admin/tools/`, {
             headers: { 'Authorization': `Bearer ${token}` }
         })
             .then(res => res.json())
@@ -48,7 +48,7 @@ export default function AdminToolsPage() {
         const token = localStorage.getItem('token');
 
         try {
-            const response = await fetch('http://localhost:8000/admin/tools/upload', {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/admin/tools/upload`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -84,7 +84,7 @@ export default function AdminToolsPage() {
         const token = localStorage.getItem('token');
         const endpoint = isActive ? 'deactivate' : 'activate';
 
-        await fetch(`http://localhost:8000/admin/tools/${toolId}/${endpoint}`, {
+        await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/admin/tools/${toolId}/${endpoint}`, {
             method: 'POST',
             headers: { 'Authorization': `Bearer ${token}` }
         });
@@ -96,7 +96,7 @@ export default function AdminToolsPage() {
         if (!confirm('Are you sure you want to delete this tool?')) return;
 
         const token = localStorage.getItem('token');
-        await fetch(`http://localhost:8000/admin/tools/${toolId}`, {
+        await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/admin/tools/${toolId}`, {
             method: 'DELETE',
             headers: { 'Authorization': `Bearer ${token}` }
         });

@@ -36,7 +36,7 @@ export default function AutomationForm({
                 return;
             }
 
-            const res = await fetch('http://localhost:8000/automations/run', {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/automations/run`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${token}`,

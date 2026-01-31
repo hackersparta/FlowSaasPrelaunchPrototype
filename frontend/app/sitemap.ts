@@ -22,7 +22,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Fetch tools for dynamic routes
     let tools = [];
     try {
-        const res = await fetch('http://localhost:8000/tools/');
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/tools/`);
         tools = await res.json();
     } catch (e) {
         console.error('Failed to fetch tools for sitemap', e);

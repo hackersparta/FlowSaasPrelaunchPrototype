@@ -28,7 +28,7 @@ export default function EditTemplate() {
         const loadTemplate = async () => {
             const token = localStorage.getItem('token');
             try {
-                const res = await fetch(`http://localhost:8000/admin/templates/${id}`, {
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/admin/templates/${id}`, {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
                 if (!res.ok) throw new Error('Template not found');
@@ -74,7 +74,7 @@ export default function EditTemplate() {
                 input_schema: JSON.stringify(inputSchema)
             };
 
-            const res = await fetch(`http://localhost:8000/admin/templates/${id}`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/admin/templates/${id}`, {
                 method: 'PATCH',
                 headers: {
                     'Authorization': `Bearer ${token}`,

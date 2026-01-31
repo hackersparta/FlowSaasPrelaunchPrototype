@@ -14,7 +14,7 @@ export default function TemplateList() {
         const token = localStorage.getItem('token');
 
         try {
-            const res = await fetch('http://localhost:8000/admin/templates', {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/admin/templates`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
 
@@ -42,7 +42,7 @@ export default function TemplateList() {
         const token = localStorage.getItem('token');
         const endpoint = isActive ? 'deactivate' : 'activate';
         try {
-            const res = await fetch(`http://localhost:8000/admin/templates/${templateId}/${endpoint}`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/admin/templates/${templateId}/${endpoint}`, {
                 method: 'POST',
                 headers: { 'Authorization': `Bearer ${token}` }
             });
@@ -56,7 +56,7 @@ export default function TemplateList() {
         if (!confirm('Are you sure you want to delete this template?')) return;
         const token = localStorage.getItem('token');
         try {
-            const res = await fetch(`http://localhost:8000/admin/templates/${templateId}`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/admin/templates/${templateId}`, {
                 method: 'DELETE',
                 headers: { 'Authorization': `Bearer ${token}` }
             });

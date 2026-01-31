@@ -24,7 +24,7 @@ export default function WorkflowClient({ id }: Props) {
     useEffect(() => {
         const loadTemplate = async () => {
             try {
-                const res = await fetch(`http://localhost:8000/templates/${id}`);
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/templates/${id}`);
                 if (!res.ok) throw new Error('Template not found');
                 const data = await res.json();
                 setTemplate(data);
@@ -68,7 +68,7 @@ export default function WorkflowClient({ id }: Props) {
         }
 
         try {
-            const res = await fetch(`http://localhost:8000/templates/${id}/run`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/templates/${id}/run`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${token}`,

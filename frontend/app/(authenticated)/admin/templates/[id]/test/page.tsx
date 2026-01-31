@@ -21,7 +21,7 @@ export default function TestTemplate() {
         const loadTemplate = async () => {
             const token = localStorage.getItem('token');
             try {
-                const res = await fetch(`http://localhost:8000/admin/templates/${id}`, {
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/admin/templates/${id}`, {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
                 if (!res.ok) throw new Error('Template not found');
@@ -56,7 +56,7 @@ export default function TestTemplate() {
         setResult(null);
         const token = localStorage.getItem('token');
         try {
-            const res = await fetch(`http://localhost:8000/admin/templates/${id}/test`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/admin/templates/${id}/test`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -82,7 +82,7 @@ export default function TestTemplate() {
     const handleActivate = async () => {
         const token = localStorage.getItem('token');
         try {
-            const res = await fetch(`http://localhost:8000/admin/templates/${id}/activate`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/admin/templates/${id}/activate`, {
                 method: 'POST',
                 headers: { 'Authorization': `Bearer ${token}` }
             });

@@ -32,7 +32,7 @@ export default function ToolClient({ slug }: ToolClientProps) {
 
     useEffect(() => {
         // Fetch tool details
-        fetch(`http://localhost:8000/tools/${slug}`)
+        fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/tools/${slug}`)
             .then(res => res.json())
             .then(data => {
                 setTool(data);
