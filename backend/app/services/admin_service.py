@@ -167,13 +167,27 @@ class AdminService:
             template.n8n_workflow_id = test_n8n_id
             db.commit()
 
-            # 4. Return success with workflow details
+            # 4. Try to activate the workflow (needed for schedule/cron triggers)
+            try:
+                await n8n_client.activate_workflow(test_n8n_id)
+                activation_status = "activated and ready to run on schedule"
+            except Exception as activation_error:
+                print(f"Activation error: {activation_error}")
+                activation_status = "created but not activated (might need manual activation)"
+
+            # 5. Return success with workflow details
             # Note: The URL must be accessible by the browser (localhost), not internal Docker host.
             public_n8n_host = os.getenv('PUBLIC_N8N_URL', 'http://localhost:5678')
             return {
                 "success": True,
+                "execution_id": test_n8n_id,
                 "n8n_workflow_id": test_n8n_id,
-                "message": f"Workflow created successfully in n8n. You can test it manually at: {public_n8n_host}/workflow/{test_n8n_id}",
+                "result": {
+                    "status": activation_status,
+                    "workflow_url": f"{public_n8n_host}/workflow/{test_n8n_id}",
+                    "note": "For workflows with schedule/cron triggers, check the n8n UI to verify execution. Webhooks and manual triggers can be tested immediately."
+                },
+                "message": f"Workflow {activation_status} in n8n. You can view it at: {public_n8n_host}/workflow/{test_n8n_id}",
                 "workflow_url": f"{public_n8n_host}/workflow/{test_n8n_id}",
                 "error": None
             }
@@ -184,6 +198,7 @@ class AdminService:
                 "result": None,
                 "error": f"n8n Test Run Error: {str(e)}"
             }
+
     
     async def activate_template(
         self,
